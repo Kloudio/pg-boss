@@ -229,7 +229,7 @@ declare namespace PgBoss {
 declare class PgBoss {
   constructor(connectionString: string);
   constructor(options: PgBoss.ConstructorOptions);
-  db: Db;
+  db: PgBoss.Db;
 
   static getConstructionPlans(schema: string): string;
   static getConstructionPlans(): string;
