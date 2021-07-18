@@ -1,3 +1,5 @@
+import Db from "./src/db"
+
 declare namespace PgBoss {
   interface Db {
     executeSql(text: string, values: any[]): Promise<{ rows: any[]; rowCount: number }>;
@@ -227,6 +229,7 @@ declare namespace PgBoss {
 declare class PgBoss {
   constructor(connectionString: string);
   constructor(options: PgBoss.ConstructorOptions);
+  db: Db;
 
   static getConstructionPlans(schema: string): string;
   static getConstructionPlans(): string;
