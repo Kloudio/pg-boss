@@ -311,6 +311,7 @@ declare class PgBoss {
 
   getQueueSize(name: string, options?: object): Promise<number>;
   getJobById(id: string): Promise<PgBoss.JobWithMetadata | null>;
+  getJobsBySchedule(scheduleName: string, limit: number) : Promise<PgBoss.JobWithMetadata[]>;
 
   deleteQueue(name: string): Promise<void>;
   deleteAllQueues(): Promise<void>;
@@ -323,6 +324,7 @@ declare class PgBoss {
   schedule(name: string, cron: string, data?: object, options?: PgBoss.ScheduleOptions): Promise<void>;
   unschedule(name: string): Promise<void>;
   getSchedules(): Promise<PgBoss.Schedule[]>;
+  getSchedulesByUser(email: string): Promise<PgBoss.Schedule[]>;
 }
 
 export = PgBoss;

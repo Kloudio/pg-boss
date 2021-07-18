@@ -37,7 +37,9 @@ class Timekeeper extends EventEmitter {
     this.functions = [
       this.schedule,
       this.unschedule,
-      this.getSchedules
+      this.getSchedules,
+      this.getSchedulesByUser,
+      this.getJobsBySchedule
     ]
 
     this.stopped = true
@@ -179,6 +181,22 @@ class Timekeeper extends EventEmitter {
     return rows
   }
 
+  async getSchedulesByUser (email) {
+    console.log('getSchedulesByUser', email);
+    const command = plans.getSchedulesByUser(this.config.schema);
+    console.log('command is ', command);
+    const { rows } = await this.db.executeSql(command, [email]);
+    return rows
+  }
+
+  async getJobsBySchedule (name, limit) {
+    console.log('getJobsBySchedule', name, limit);
+    const command = plans.getJobsBySchedule(this.config.schema);
+    console.log('command is ', command);
+    const { rows } = await this.db.executeSql(command, [name, limit]);
+    return rows
+  }
+
   async schedule (name, cron, data, options = {}) {
     const { tz = 'UTC' } = options
 
@@ -194,8 +212,8 @@ class Timekeeper extends EventEmitter {
     return result ? result.rowCount : null
   }
 
-  async unschedule (name) {
-    const result = await this.db.executeSql(this.unscheduleCommand, [name])
+  async unschedule (name, userId) {
+    const result = await this.db.executeSql(this.unscheduleCommand, [name, userId])
     return result ? result.rowCount : null
   }
 

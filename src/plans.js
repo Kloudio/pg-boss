@@ -31,6 +31,8 @@ module.exports = {
   insertJob,
   getTime,
   getSchedules,
+  getSchedulesByUser,
+  getJobsBySchedule,
   schedule,
   unschedule,
   expire,
@@ -266,11 +268,18 @@ function getSchedules (schema) {
   `
 }
 
+function getSchedulesByUser (schema) {
+  return `
+    SELECT * FROM ${schema}.schedule
+    WHERE data->>'email' = $1
+  `
+}
+
 function schedule (schema) {
   return `
-    INSERT INTO ${schema}.schedule (name, cron, timezone, data, options)
-    VALUES ($1, $2, $3, $4, $5)
-    ON CONFLICT (name) DO UPDATE SET
+    INSERT INTO ${schema}.schedule (name, cron, timezone, data, options, user_id)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    ON CONFLICT (name, user_id) DO UPDATE SET
       cron = EXCLUDED.cron,
       timezone = EXCLUDED.timezone,
       data = EXCLUDED.data,
@@ -283,6 +292,7 @@ function unschedule (schema) {
   return `
     DELETE FROM ${schema}.schedule
     WHERE name = $1
+    and user_id = $2
   `
 }
 
@@ -577,10 +587,19 @@ function getJobById (schema) {
   return getJobByTableAndId(schema, 'job')
 }
 
+function getJobsBySchedule (schema) {
+  return `
+    SELECT * FROM ${schema}.job
+    WHERE name = $1
+    ORDER BY createdon desc
+    LIMIT $2
+  `
+}
+
 function getArchivedJobById (schema) {
   return getJobByTableAndId(schema, 'archive')
 }
 
 function getJobByTableAndId (schema, table) {
-  return `SELECT * From ${schema}.${table} WHERE id = $1`
+  return `SELECT * FROM ${schema}.${table} WHERE id = $1`
 }
