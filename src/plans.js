@@ -277,9 +277,9 @@ function getSchedulesByUser (schema) {
 
 function schedule (schema) {
   return `
-    INSERT INTO ${schema}.schedule (name, cron, timezone, data, options, user_id)
+    INSERT INTO ${schema}.schedule (name, cron, timezone, data, options)
     VALUES ($1, $2, $3, $4, $5, $6)
-    ON CONFLICT (name, user_id) DO UPDATE SET
+    ON CONFLICT (name) DO UPDATE SET
       cron = EXCLUDED.cron,
       timezone = EXCLUDED.timezone,
       data = EXCLUDED.data,
@@ -292,7 +292,6 @@ function unschedule (schema) {
   return `
     DELETE FROM ${schema}.schedule
     WHERE name = $1
-    and user_id = $2
   `
 }
 
