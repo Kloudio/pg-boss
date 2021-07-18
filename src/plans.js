@@ -278,7 +278,7 @@ function getSchedulesByUser (schema) {
 function schedule (schema) {
   return `
     INSERT INTO ${schema}.schedule (name, cron, timezone, data, options)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    VALUES ($1, $2, $3, $4, $5)
     ON CONFLICT (name) DO UPDATE SET
       cron = EXCLUDED.cron,
       timezone = EXCLUDED.timezone,
