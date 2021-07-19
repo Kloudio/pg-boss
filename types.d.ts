@@ -325,7 +325,7 @@ declare class PgBoss {
   expire(): Promise<void>;
 
   schedule(name: string, cron: string, data?: object, options?: PgBoss.ScheduleOptions): Promise<void>;
-  unschedule(name: string): Promise<void>;
+  unschedule(id: string): Promise<void>;
   getSchedules(): Promise<PgBoss.Schedule[]>;
   getSchedulesByUser(email: string): Promise<PgBoss.Schedule[]>;
   getScheduleById(id: string): Promise<PgBoss.Schedule>;

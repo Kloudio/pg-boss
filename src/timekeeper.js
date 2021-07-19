@@ -217,8 +217,8 @@ class Timekeeper extends EventEmitter {
     return result ? result.rowCount : null
   }
 
-  async unschedule (name, userId) {
-    const result = await this.db.executeSql(this.unscheduleCommand, [name, userId])
+  async unschedule (id) {
+    const result = await this.db.executeSql(this.unscheduleCommand, [id])
     return result ? result.rowCount : null
   }
 
