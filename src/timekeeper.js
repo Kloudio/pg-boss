@@ -189,7 +189,7 @@ class Timekeeper extends EventEmitter {
   }
 
   async getScheduleById (id) {
-    const command = plans.getSchedulesById(this.config.schema);
+    const command = plans.getScheduleById(this.config.schema);
     const { rows, rowCount } = await this.db.executeSql(command, [id]);
     return rowCount === 1 ? rows[0] : null;
   }
