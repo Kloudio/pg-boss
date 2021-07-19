@@ -39,7 +39,8 @@ class Timekeeper extends EventEmitter {
       this.unschedule,
       this.getSchedules,
       this.getSchedulesByUser,
-      this.getJobsBySchedule
+      this.getJobsBySchedule,
+      this.getScheduleById
     ]
 
     this.stopped = true
