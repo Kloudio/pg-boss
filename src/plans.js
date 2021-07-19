@@ -32,6 +32,7 @@ module.exports = {
   getTime,
   getSchedules,
   getSchedulesByUser,
+  getScheduleById,
   getJobsBySchedule,
   schedule,
   unschedule,
@@ -272,6 +273,13 @@ function getSchedulesByUser (schema) {
   return `
     SELECT * FROM ${schema}.schedule
     WHERE data->>'email' = $1
+  `
+}
+
+function getScheduleById (schema) {
+  return `
+    SELECT * FROM ${schema}.schedule
+    WHERE "name" = $1
   `
 }
 

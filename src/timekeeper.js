@@ -182,11 +182,15 @@ class Timekeeper extends EventEmitter {
   }
 
   async getSchedulesByUser (email) {
-    console.log('getSchedulesByUser', email);
     const command = plans.getSchedulesByUser(this.config.schema);
-    console.log('command is ', command);
     const { rows } = await this.db.executeSql(command, [email]);
     return rows
+  }
+
+  async getScheduleById (id) {
+    const command = plans.getSchedulesById(this.config.schema);
+    const { rows, rowCount } = await this.db.executeSql(command, [id]);
+    return rowCount === 1 ? rows[0] : null;
   }
 
   async getJobsBySchedule (name, limit) {

@@ -328,6 +328,8 @@ declare class PgBoss {
   unschedule(name: string): Promise<void>;
   getSchedules(): Promise<PgBoss.Schedule[]>;
   getSchedulesByUser(email: string): Promise<PgBoss.Schedule[]>;
+  getScheduleById(id: string): Promise<PgBoss.Schedule>;
+
 }
 
 export = PgBoss;
